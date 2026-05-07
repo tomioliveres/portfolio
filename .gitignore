@@ -1,0 +1,6 @@
+.DS_Store
+.next/
+build/
+dist/
+out/
+*-sandbox/
