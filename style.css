@@ -11,6 +11,9 @@
   --primary-strong: #25aaca;
   --accent: #9dcfe0;
   --shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+  --focus-ring: rgba(157, 207, 224, 0.92);
+  --focus-glow: rgba(43, 180, 187, 0.28);
+  --focus-surface: rgba(43, 180, 187, 0.14);
   --radius: 24px;
   --radius-sm: 16px;
   --container: min(1120px, calc(100% - 2rem));
@@ -56,22 +59,27 @@ textarea {
 .skip-link {
   position: absolute;
   left: 1rem;
-  top: -3rem;
+  top: 1rem;
   z-index: 1000;
   padding: 0.75rem 1rem;
   background: var(--accent);
   color: #031014;
   border-radius: 999px;
-  transition: top var(--transition);
+  transform: translateY(calc(-100% - 1rem));
+  transition: transform var(--transition);
 }
 
-.skip-link:focus {
-  top: 1rem;
+.skip-link:focus-visible {
+  transform: translateY(0);
 }
 
 .container {
   width: var(--container);
   margin-inline: auto;
+}
+
+main {
+  scroll-margin-top: calc(var(--header-height) + 20px);
 }
 
 .section {
@@ -147,8 +155,16 @@ h3 {
 }
 
 .brand {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
   font-weight: 700;
   letter-spacing: 0.02em;
+  border-radius: 999px;
+  transition:
+    color var(--transition),
+    background-color var(--transition),
+    box-shadow var(--transition);
 }
 
 .nav-list {
@@ -174,11 +190,9 @@ h3 {
 }
 
 .nav-list a:hover,
-.nav-list a:focus-visible,
 .nav-list a.is-active {
   color: var(--text);
   background: rgba(43, 180, 187, 0.12);
-  outline: none;
 }
 
 .nav-toggle {
@@ -191,6 +205,11 @@ h3 {
   color: var(--text);
   padding: 0;
   cursor: pointer;
+  transition:
+    border-color var(--transition),
+    background-color var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition);
 }
 
 .nav-toggle span {
@@ -292,7 +311,6 @@ h3 {
 .button:hover,
 .button:focus-visible {
   transform: translateY(-1px);
-  outline: none;
 }
 
 .button-primary {
@@ -319,6 +337,36 @@ h3 {
 .button-project-cta:hover,
 .button-project-cta:focus-visible {
   box-shadow: 0 20px 38px rgba(37, 170, 202, 0.3);
+}
+
+.brand:focus-visible,
+.nav-list a:focus-visible,
+.nav-toggle:focus-visible,
+.button:focus-visible,
+.social-card:focus-visible,
+.project-gallery__thumb:focus-visible,
+.form-field input:focus-visible,
+.form-field textarea:focus-visible,
+.project-card:focus-within {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--bg),
+    0 0 0 4px var(--focus-ring),
+    0 0 0 8px var(--focus-glow);
+}
+
+.brand:focus-visible,
+.nav-list a:focus-visible,
+.nav-toggle:focus-visible,
+.button:focus-visible,
+.social-card:focus-visible {
+  background: var(--focus-surface);
+}
+
+.nav-list a:focus-visible,
+.social-card:focus-visible,
+.project-card:focus-within {
+  border-color: rgba(157, 207, 224, 0.42);
 }
 
 .button__icon {
@@ -766,8 +814,6 @@ h3 {
 .project-gallery__thumb:focus-visible {
   transform: translateY(-2px);
   border-color: rgba(157, 207, 224, 0.7);
-  box-shadow: 0 0 0 3px rgba(157, 207, 224, 0.2);
-  outline: none;
 }
 
 .project-gallery__thumb[aria-pressed="true"] {
@@ -890,7 +936,6 @@ h3 {
 }
 
 .social-card:hover,
-.social-card:focus-visible,
 .project-card:hover,
 .project-card:focus-within {
   transform: translateY(-4px);
@@ -950,11 +995,10 @@ h3 {
   transition: border-color var(--transition), box-shadow var(--transition), background-color var(--transition);
 }
 
-.form-field input:focus,
-.form-field textarea:focus {
+.form-field input:focus-visible,
+.form-field textarea:focus-visible {
   outline: none;
   border-color: rgba(43, 180, 187, 0.72);
-  box-shadow: 0 0 0 4px rgba(43, 180, 187, 0.12);
   background: rgba(157, 207, 224, 0.07);
 }
 
